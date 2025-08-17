@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FA4CCAF0-72C2-455F-8A75-8E40A5A918DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SelectionByTypeReport</RootNamespace>
+    <AssemblyName>SelectionByTypeReport</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>C:\Program Files %28x86%29\T-FLEX DOCs 17\Program\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Utils.v21.2, Version=21.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\DevExpress.Utils.v21.2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 15\Program\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TFlex.DOCs.Model, Version=17.5.3.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\TFlex.DOCs.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="TFlex.DOCs.UI.Common, Version=17.5.3.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\TFlex.DOCs.UI.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TFlex.DOCs.UI.Objects, Version=17.5.3.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\TFlex.DOCs.UI.Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="TFlex.DOCs.UI.Types, Version=17.5.3.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\TFlex.DOCs.UI.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="TFlex.Reporting, Version=17.5.3.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\T-FLEX DOCs 17\Program\TFlex.Reporting.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CountDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CountDeviceForm.Designer.cs">
+      <DependentUpon>CountDeviceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtractFilesByListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtractFilesByListDialog.Designer.cs">
+      <DependentUpon>ExtractFilesByListDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Guids.cs" />
+    <Compile Include="IndicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IndicationForm.Designer.cs">
+      <DependentUpon>IndicationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectionByTypeReport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectionForm.Designer.cs">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xls.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CountDeviceForm.resx">
+      <DependentUpon>CountDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtractFilesByListDialog.resx">
+      <DependentUpon>ExtractFilesByListDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndicationForm.resx">
+      <DependentUpon>IndicationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectionForm.resx">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

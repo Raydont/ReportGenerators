@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace GroupingOIReport
+{
+    public partial class IndicationForm : Form
+    {
+        public IndicationForm()
+        {
+            System.Windows.Forms.Application.EnableVisualStyles();
+            InitializeComponent();
+        }
+
+        public enum Stages
+        {
+            Initialization,
+            DataAcquisition,
+            DataProcessing,
+            ReportGenerating,
+            Done
+        }
+
+        int counter;
+        public void writeToLog(string line)
+        {
+            counter++;
+            DateTime now = DateTime.Now;
+            string s = String.Format("[{0:yyyy-MM-dd_HH:mm:ss}] {1}\r\n", now, line);
+            LogTextBox.AppendText(s);
+
+            if (counter > 30)
+            {
+                Application.DoEvents();
+                LogTextBox.Invalidate();
+                counter = 0;
+            }
+        }
+
+        public void setStage(Stages stage)
+        {
+            switch (stage)
+            {
+                case Stages.Initialization:
+                    processinglabel.Text = "Инициализация...";
+                    break;
+                case Stages.DataAcquisition:
+                    processinglabel.Text = "Получение данных";
+                    break;
+                case Stages.DataProcessing:
+                    processinglabel.Text = "Обработка данных";
+                    break;
+                case Stages.ReportGenerating:
+                    processinglabel.Text = "Создание отчёта";
+                    break;
+                case Stages.Done:
+                    break;
+                default:
+                    System.Diagnostics.Debug.Assert(false);
+                    break;
+            }
+            this.Update();
+        }
+
+        private void buttonCansel_Click(object sender, EventArgs e)
+        {
+            ActiveForm.Close();
+        }
+    }
+}

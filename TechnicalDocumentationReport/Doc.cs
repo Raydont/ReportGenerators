@@ -1,0 +1,216 @@
+﻿using System;
+using Microsoft.Office.Interop.Word;
+
+namespace ReportHelpers
+{
+    public class Doc : IDisposable
+    {
+        private Application _application;
+        public Application Application
+        {
+            get { return _application ?? (_application = new Application { Visible = _visible }); }
+        }
+
+        private Document _document;
+        public Document Document
+        {
+            get { return _document ?? (_document = Application.Documents.Add()); }
+        }
+
+        private bool _visible;
+        public bool Visible
+        {
+            get
+            {
+                return _visible;
+            }
+            set
+            {
+
+                _visible = value;
+                if (_application != null)
+                {
+                    _application.Visible = _visible;
+                }
+            }
+        }
+
+        #region работа с документами
+
+        public void Open(string docPath, bool saveLast = true, bool readOnly = false)
+        {
+            if (_document != null)
+            {
+                _document.Close(saveLast);
+            }
+            _document = null;
+            _document = Application.Documents.Open(docPath, ReadOnly: readOnly);
+        }
+
+        public void Close(bool saveChanges = false)
+        {
+            if (_document != null)
+            {
+                _document.Close(saveChanges);
+                _document = null;
+            }
+        }
+
+        public void Save()
+        {
+            if (_document != null)
+            {
+                _document.Save();
+            }
+        }
+
+        public void SaveAs(string docPath)
+        {
+            if (_document != null) _document.SaveAs(docPath);
+        }
+
+        public void Dispose()
+        {
+            Quit();
+        }
+
+        public void Quit(bool saveChanges = false)
+        {
+            if (_application == null) return;
+
+            Close(saveChanges);
+
+            _application.Quit();
+            _application = null;
+        }
+
+        #endregion
+
+        #region Конвертация единиц
+
+        public float CentimetersToPoints(float centimeters)
+        {
+            return Application.CentimetersToPoints(centimeters);
+        }
+
+        public float InchesToPoints(float inches)
+        {
+            return Application.InchesToPoints(inches);
+        }
+
+        public float MillimetersToPoints(float millimeters)
+        {
+            return Application.MillimetersToPoints(millimeters);
+        }
+
+        public float PicasToPoints(float picas)
+        {
+            return Application.PicasToPoints(picas);
+        }
+
+        #endregion
+
+        public bool SetShapeValue(string key, string text)
+        {
+            var result = false;
+            foreach (Shape shape in Document.Shapes)
+            {
+                if (string.IsNullOrWhiteSpace(shape.AlternativeText)) continue;
+
+                var shapeKey = shape.AlternativeText.ToUpper();
+
+                if (shapeKey == key.ToUpper())
+                {
+                    shape.TextFrame.TextRange.Text = text;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public bool SetBookmarkValue(string key, string text)
+        {
+            var result = false;
+            foreach (Bookmark bookmark in Document.Bookmarks)
+            {
+                if (bookmark.Name.ToUpper() == key)
+                {
+                    bookmark.Range.Text = text;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public bool SetTextFieldValue(string key, string text)
+        {
+            var result = false;
+            foreach (FormField formField in Document.FormFields)
+            {
+                if (formField.Type != WdFieldType.wdFieldFormTextInput) continue;
+                if (formField.Name == key)
+                {
+                    formField.Result = text;
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public bool SetReportValue(string key, string text)
+        {
+            return SetShapeValue(key, text) | SetBookmarkValue(key, text) | SetTextFieldValue(key, text);
+        }
+
+        public Bookmark GetBookmark(string key)
+        {
+            foreach (Bookmark bookmark in Document.Bookmarks)
+            {
+                if (bookmark.Name.ToUpper() == key)
+                {
+                    return bookmark;
+                }
+            }
+            return null;
+        }
+
+
+        public Table CreateTable(Range range, int numRows, int numColumns, WdAutoFitBehavior autofit)
+        {
+            return Document.Tables.Add(range, numRows, numColumns, WdDefaultTableBehavior.wdWord9TableBehavior, autofit);
+        }
+
+    }
+
+    public static class DocExtender
+    {
+        public static void SetWidthCentimeters(this Column column, float centimeters)
+        {
+            column.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPoints;
+            column.PreferredWidth = column.Application.CentimetersToPoints(centimeters);
+        }
+
+        public static void SetWidthPercent(this Column column, float percent)
+        {
+            column.PreferredWidthType = WdPreferredWidthType.wdPreferredWidthPercent;
+            column.PreferredWidth = percent;
+        }
+
+        public static void SetText(this Table table, int col, int row, string text)
+        {
+            table.Rows[row].Cells[col].Range.Text = text;
+        }
+
+        public static void CenterText(this Range range)
+        {
+            range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+        }
+
+        public static void Bold(this Range range, bool bold = true)
+        {
+            range.Font.Bold = bold ? 1 : 0;
+        }
+    }
+}
+
+
